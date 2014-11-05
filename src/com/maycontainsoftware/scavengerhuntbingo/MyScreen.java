@@ -31,7 +31,8 @@ public abstract class MyScreen implements Screen {
 	}
 
 	/**
-	 * The resize() method is called very frequently. We store the last-used display width and height so unnecessary calls can be ignored.
+	 * The resize() method is called very frequently. We store the last-used display width and height so unnecessary
+	 * calls can be ignored.
 	 */
 	@Override
 	public void resize(int width, int height) {
@@ -56,9 +57,9 @@ public abstract class MyScreen implements Screen {
 	protected abstract void doResize(int displayWidth, int displayHeight);
 
 	/**
-	 * When a Screen is activated via Game.setScreen(), show() is called. However, every other time a Screen is made visible, resume() is
-	 * called. We assume there's nothing we want to do on *first* display that we wouldn't also want to do on subsequent displays, so the
-	 * show() method simply calls resume().
+	 * When a Screen is activated via Game.setScreen(), show() is called. However, every other time a Screen is made
+	 * visible, resume() is called. We assume there's nothing we want to do on *first* display that we wouldn't also
+	 * want to do on subsequent displays, so the show() method simply calls resume().
 	 */
 	@Override
 	public final void show() {
@@ -69,7 +70,7 @@ public abstract class MyScreen implements Screen {
 	public void hide() {
 		pause();
 	}
-	
+
 	@Override
 	public void dispose() {
 		// No-op

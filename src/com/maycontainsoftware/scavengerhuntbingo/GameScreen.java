@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GameScreen extends MyScreen {
 
-//	private static final String TAG = GameScreen.class.getName();
+	// private static final String TAG = GameScreen.class.getName();
 
 	// Texture containing the tileset for this game
 	private final Texture subjectTexture;
@@ -70,7 +70,7 @@ public class GameScreen extends MyScreen {
 
 	public GameScreen(MyGame game) {
 		super(game, 500, 700);
-//		Gdx.app.log(TAG, "<init>()");
+		// Gdx.app.log(TAG, "<init>()");
 
 		// Whether this is a new game or we're continuing an old game
 		// we will always have a board size and subject
@@ -79,7 +79,7 @@ public class GameScreen extends MyScreen {
 
 		boardSize = game.prefs.getInteger(MyGame.PREF_BOARD_SIZE, 5);
 		numberOfTiles = boardSize * boardSize;
-//		Gdx.app.log(TAG, "boardSize = " + boardSize);
+		// Gdx.app.log(TAG, "boardSize = " + boardSize);
 
 		// Create rectangles for all tiles
 		tileRect = new Rectangle[numberOfTiles];
@@ -91,11 +91,11 @@ public class GameScreen extends MyScreen {
 
 		// Get subject
 		final String subject = game.prefs.getString(MyGame.PREF_SUBJECT);
-//		Gdx.app.log(TAG, "subject = " + subject);
+		// Gdx.app.log(TAG, "subject = " + subject);
 
 		// Pull card texture for the selected subject
 		FileHandle fileHandle = Gdx.files.internal(subject + ".png");
-//		Gdx.app.log(TAG,  "" + fileHandle);
+		// Gdx.app.log(TAG, "" + fileHandle);
 		// TODO: Improve missing-file handling in next version
 		// If files have been renamed, the following line can throw an Exception.
 		// Solution might be to create the FileHandle in MyGame and check whether it
@@ -108,12 +108,12 @@ public class GameScreen extends MyScreen {
 		// All textures contain 5x5 = 25 tiles
 		subjectTextures = new TextureRegion[25];
 		final float regionSize = 1.0f / 5.0f;
-//		Gdx.app.log(TAG, "regionSize = " + regionSize);
+		// Gdx.app.log(TAG, "regionSize = " + regionSize);
 		for (int i = 0; i < 25; i++) {
 			final int x = i % 5;
 			final int y = i / 5;
-			subjectTextures[i] = new TextureRegion(subjectTexture, x * regionSize, y * regionSize, (x + 1) * regionSize, (y + 1)
-					* regionSize);
+			subjectTextures[i] = new TextureRegion(subjectTexture, x * regionSize, y * regionSize,
+					(x + 1) * regionSize, (y + 1) * regionSize);
 		}
 
 		// Create arrays for game state
@@ -122,7 +122,7 @@ public class GameScreen extends MyScreen {
 
 		// Determine whether a game was in progress
 		final boolean gameInProgress = game.prefs.getBoolean(MyGame.PREF_GAME_IN_PROGRESS, false);
-//		Gdx.app.log(TAG, "gameInProgress = " + gameInProgress);
+		// Gdx.app.log(TAG, "gameInProgress = " + gameInProgress);
 		if (!gameInProgress) {
 			// This is a new game!
 			// Because we want to save/restore state in pause/resume, we're not going to do it here as well
@@ -153,7 +153,7 @@ public class GameScreen extends MyScreen {
 
 	@Override
 	public void pause() {
-//		Gdx.app.log(TAG, "pause()");
+		// Gdx.app.log(TAG, "pause()");
 
 		// Save game state
 
@@ -173,7 +173,7 @@ public class GameScreen extends MyScreen {
 
 	@Override
 	public void resume() {
-//		Gdx.app.log(TAG, "resume()");
+		// Gdx.app.log(TAG, "resume()");
 
 		// At point of resume, game is *always* in progress and has valid state, because we set it in <init>
 		// Restore game state
@@ -191,17 +191,17 @@ public class GameScreen extends MyScreen {
 		// Set size of back button
 		TextBounds backBounds = game.font32.getBounds(BACK_TEXT);
 		backTextRect.setSize(backBounds.width, backBounds.height);
-//		Gdx.app.log(TAG, "backRect.height = " + backTextRect.height);
+		// Gdx.app.log(TAG, "backRect.height = " + backTextRect.height);
 
 		// Set size of header
 		TextBounds headerBounds = game.font42.getBounds(HEADER_TEXT);
 		headerTextRect.setSize(headerBounds.width, headerBounds.height);
-//		Gdx.app.log(TAG, "headerRect.height = " + headerTextRect.height);
+		// Gdx.app.log(TAG, "headerRect.height = " + headerTextRect.height);
 	}
 
 	@Override
 	protected void doResize(int displayWidth, int displayHeight) {
-//		Gdx.app.log(TAG, "doResize()");
+		// Gdx.app.log(TAG, "doResize()");
 
 		// Extra padding required between screen elements
 		final int screenPadding = 20;
@@ -226,7 +226,8 @@ public class GameScreen extends MyScreen {
 		headerRect.setSize(cardRect.width - 2 * BORDER_SIZE, HEADER_HEIGHT);
 
 		// Position of card header
-		headerTextRect.setPosition(midx - headerTextRect.width / 2, cardRect.y + cardWidth + HEADER_HEIGHT / 2 - headerTextRect.height / 2);
+		headerTextRect.setPosition(midx - headerTextRect.width / 2, cardRect.y + cardWidth + HEADER_HEIGHT / 2
+				- headerTextRect.height / 2);
 
 		// Determine tile size and update sizes of tile Rectangles
 		tileSize = (cardRect.width - (boardSize + 1) * BORDER_SIZE) / boardSize;
@@ -239,8 +240,8 @@ public class GameScreen extends MyScreen {
 		for (int i = 0; i < numberOfTiles; i++) {
 			int x = i % boardSize;
 			int y = i / boardSize;
-			tileRect[i].setPosition(left + BORDER_SIZE + x * (tileSize + BORDER_SIZE), top - BORDER_SIZE - HEADER_HEIGHT
-					- (BORDER_SIZE + tileSize) * (y + 1));
+			tileRect[i].setPosition(left + BORDER_SIZE + x * (tileSize + BORDER_SIZE), top - BORDER_SIZE
+					- HEADER_HEIGHT - (BORDER_SIZE + tileSize) * (y + 1));
 		}
 
 		bingoEffect.resize(displayWidth, displayHeight);
@@ -260,7 +261,7 @@ public class GameScreen extends MyScreen {
 
 			// Determine whether the back button was pressed
 			if (backTextRect.contains(pos.x, pos.y)) {
-//				Gdx.app.log(TAG, "Back!");
+				// Gdx.app.log(TAG, "Back!");
 				game.setScreen(new MenuScreen(game));
 				dispose();
 				return;
@@ -270,7 +271,7 @@ public class GameScreen extends MyScreen {
 				// Determine whether a tile was pressed
 				for (int i = 0; i < numberOfTiles; i++) {
 					if (tileRect[i].contains(pos.x, pos.y)) {
-//						Gdx.app.log(TAG, "Tile " + i + "!");
+						// Gdx.app.log(TAG, "Tile " + i + "!");
 						// Toggle the touched tile
 						seen[i] = !seen[i];
 					}
@@ -294,9 +295,9 @@ public class GameScreen extends MyScreen {
 			}
 
 			// Otherwise, don't can what was pressed - going to ignore it!
-			
-		} else if(Gdx.input.isKeyPressed(Keys.BACK)) {
-//			Gdx.app.log(TAG, "Back!");
+
+		} else if (Gdx.input.isKeyPressed(Keys.BACK)) {
+			// Gdx.app.log(TAG, "Back!");
 			game.setScreen(new MenuScreen(game));
 			dispose();
 			return;
@@ -317,7 +318,7 @@ public class GameScreen extends MyScreen {
 		camera.update();
 		// Render the pretty background effect
 		game.backgroundEffect.render(game);
-		
+
 		// Draw card - first the filled areas
 
 		game.shapeRenderer.setProjectionMatrix(camera.combined);
@@ -371,7 +372,8 @@ public class GameScreen extends MyScreen {
 			} else {
 				game.batch.setColor(1.0f, 1.0f, 1.0f, 0.1f);
 			}
-			game.batch.draw(subjectTextures[tileTextureMapping[i]], tileRect[i].x, tileRect[i].y, tileRect[i].width, tileRect[i].height);
+			game.batch.draw(subjectTextures[tileTextureMapping[i]], tileRect[i].x, tileRect[i].y, tileRect[i].width,
+					tileRect[i].height);
 		}
 
 		// End sprite render batch
