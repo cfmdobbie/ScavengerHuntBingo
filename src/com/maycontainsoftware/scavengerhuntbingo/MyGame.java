@@ -3,6 +3,7 @@ package com.maycontainsoftware.scavengerhuntbingo;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -40,6 +41,8 @@ public class MyGame extends Game {
 	// Background effect
 	BackgroundEffect backgroundEffect;
 
+	private AssetManager manager;
+
 	@Override
 	public void create() {
 		// Gdx.app.log(TAG, "create()");
@@ -48,12 +51,24 @@ public class MyGame extends Game {
 		batch = new SpriteBatch();
 		shapeRenderer = new ShapeRenderer();
 
-		// Create standard fonts
-		font32 = new BitmapFont(Gdx.files.internal("impact32.fnt"));
-		font38 = new BitmapFont(Gdx.files.internal("impact38.fnt"));
-		font42 = new BitmapFont(Gdx.files.internal("impact42.fnt"));
-		font48 = new BitmapFont(Gdx.files.internal("impact48.fnt"));
-		font64 = new BitmapFont(Gdx.files.internal("impact64.fnt"));
+		// Create asset manager
+		manager = new AssetManager();
+
+		// Start loading fonts
+		final int[] fontSizes = new int[] { 32, 38, 42, 48, 64 };
+		for (final int fontSize : fontSizes) {
+			manager.load("impact" + fontSize + ".fnt", BitmapFont.class);
+		}
+
+		// Finish loading all assets in manager
+		manager.finishLoading();
+
+		// Save references to bitmap fonts
+		font32 = manager.get("impact32.fnt", BitmapFont.class);
+		font38 = manager.get("impact38.fnt", BitmapFont.class);
+		font42 = manager.get("impact42.fnt", BitmapFont.class);
+		font48 = manager.get("impact48.fnt", BitmapFont.class);
+		font64 = manager.get("impact64.fnt", BitmapFont.class);
 
 		// Data persistence
 		prefs = Gdx.app.getPreferences(PREFERENCES_NAME);
