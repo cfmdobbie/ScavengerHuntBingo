@@ -98,12 +98,8 @@ public class MyGame extends Game {
 		batch.dispose();
 		shapeRenderer.dispose();
 
-		// Dispose of fonts
-		font32.dispose();
-		font38.dispose();
-		font42.dispose();
-		font48.dispose();
-		font64.dispose();
+		// Dispose of manager, and assets in manager
+		manager.dispose();
 
 		super.dispose();
 	}
