@@ -16,7 +16,7 @@ public class CopyStaticAssets {
 	public static void main(String[] args) throws IOException {
 
 		// Target directory - note assumed project name!
-		final File outputDirectory = new File("../ScavengerHuntBingo-android/assets/");
+		final File outputDirectory = new File("../" + getCurrentDirectoryName() + "-android/assets/");
 
 		// Fixed assets in the local assets directory
 		final File[] inputDirectories = new File[] { new File("./assets/graphics/static/"),
@@ -31,6 +31,14 @@ public class CopyStaticAssets {
 				copyFile(inputFile, outputFile);
 			}
 		}
+	}
+
+	/** Determine the current directory name. */
+	private static String getCurrentDirectoryName() throws IOException {
+		final String currentDirectoryPath = new File(".").getCanonicalPath();
+		final int lastSeparator = currentDirectoryPath.lastIndexOf(System.getProperty("file.separator"));
+		final String currentDirectoryName = currentDirectoryPath.substring(lastSeparator + 1);
+		return currentDirectoryName;
 	}
 
 	/**

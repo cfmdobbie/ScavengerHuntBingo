@@ -21,11 +21,11 @@ public class GenerateAtlases {
 		final File inputDir = new File(inputDirStr);
 
 		// Output directory
-		final String outputDirStr = "../ScavengerHuntBingo-android/assets";
+		final String outputDirStr = "../" + getCurrentDirectoryName() + "-android/assets";
 
 		final Settings settings = new Settings();
 
-		// Supporting OpenGL ES 1.0 - need to avoid non-PoT tectures
+		// Supporting OpenGL ES 1.0 - need to avoid non-PoT textures
 		settings.pot = true;
 
 		// All devices should support non-square textures
@@ -60,5 +60,13 @@ public class GenerateAtlases {
 			final String subdirName = atlasDirectory.getName();
 			TexturePacker2.process(settings, subdirStr, outputDirStr, subdirName);
 		}
+	}
+
+	/** Determine the current directory name. */
+	private static String getCurrentDirectoryName() throws IOException {
+		final String currentDirectoryPath = new File(".").getCanonicalPath();
+		final int lastSeparator = currentDirectoryPath.lastIndexOf(System.getProperty("file.separator"));
+		final String currentDirectoryName = currentDirectoryPath.substring(lastSeparator + 1);
+		return currentDirectoryName;
 	}
 }
